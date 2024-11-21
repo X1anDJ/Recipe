@@ -25,11 +25,6 @@ struct ErrorView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
             
-            Text("Pull down to refresh.")
-                .font(.title2)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal)
         }
         //backgroundcolor
         

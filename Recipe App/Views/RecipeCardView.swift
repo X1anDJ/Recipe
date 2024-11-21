@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct RecipeCard: View {
+struct RecipeCardView: View {
     let recipe: Recipe
     let infoHeight: CGFloat = 64
     let cardHorizontalPadding: CGFloat = 24

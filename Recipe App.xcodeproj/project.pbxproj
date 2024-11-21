@@ -10,14 +10,30 @@
 		DC21999E2CEE909700FDA4AB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DC21999D2CEE909700FDA4AB /* Kingfisher */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DC219A182CEF255A00FDA4AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC2199832CEE907400FDA4AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC21998A2CEE907400FDA4AB;
+			remoteInfo = "Recipe App";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		DC21998B2CEE907400FDA4AB /* Recipe App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Recipe App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC219A142CEF255A00FDA4AB /* Recipe AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Recipe AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DC21998D2CEE907400FDA4AB /* Recipe App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Recipe App";
+			sourceTree = "<group>";
+		};
+		DC219A152CEF255A00FDA4AB /* Recipe AppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Recipe AppTests";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -31,6 +47,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC219A112CEF255A00FDA4AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -38,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				DC21998D2CEE907400FDA4AB /* Recipe App */,
+				DC219A152CEF255A00FDA4AB /* Recipe AppTests */,
 				DC21998C2CEE907400FDA4AB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				DC21998B2CEE907400FDA4AB /* Recipe App.app */,
+				DC219A142CEF255A00FDA4AB /* Recipe AppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,6 +101,29 @@
 			productReference = DC21998B2CEE907400FDA4AB /* Recipe App.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DC219A132CEF255A00FDA4AB /* Recipe AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC219A1C2CEF255A00FDA4AB /* Build configuration list for PBXNativeTarget "Recipe AppTests" */;
+			buildPhases = (
+				DC219A102CEF255A00FDA4AB /* Sources */,
+				DC219A112CEF255A00FDA4AB /* Frameworks */,
+				DC219A122CEF255A00FDA4AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DC219A192CEF255A00FDA4AB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				DC219A152CEF255A00FDA4AB /* Recipe AppTests */,
+			);
+			name = "Recipe AppTests";
+			packageProductDependencies = (
+			);
+			productName = "Recipe AppTests";
+			productReference = DC219A142CEF255A00FDA4AB /* Recipe AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -88,6 +136,10 @@
 				TargetAttributes = {
 					DC21998A2CEE907400FDA4AB = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					DC219A132CEF255A00FDA4AB = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = DC21998A2CEE907400FDA4AB;
 					};
 				};
 			};
@@ -109,12 +161,20 @@
 			projectRoot = "";
 			targets = (
 				DC21998A2CEE907400FDA4AB /* Recipe App */,
+				DC219A132CEF255A00FDA4AB /* Recipe AppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		DC2199892CEE907400FDA4AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC219A122CEF255A00FDA4AB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -131,7 +191,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC219A102CEF255A00FDA4AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DC219A192CEF255A00FDA4AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC21998A2CEE907400FDA4AB /* Recipe App */;
+			targetProxy = DC219A182CEF255A00FDA4AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DC2199972CEE907500FDA4AB /* Debug */ = {
@@ -269,6 +344,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -298,6 +374,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -308,6 +385,42 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DC219A1A2CEF255A00FDA4AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZGPM5R49KX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dajun.Recipe-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Recipe App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Recipe App";
+			};
+			name = Debug;
+		};
+		DC219A1B2CEF255A00FDA4AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZGPM5R49KX;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dajun.Recipe-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Recipe App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Recipe App";
 			};
 			name = Release;
 		};
@@ -328,6 +441,15 @@
 			buildConfigurations = (
 				DC21999A2CEE907500FDA4AB /* Debug */,
 				DC21999B2CEE907500FDA4AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC219A1C2CEF255A00FDA4AB /* Build configuration list for PBXNativeTarget "Recipe AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC219A1A2CEF255A00FDA4AB /* Debug */,
+				DC219A1B2CEF255A00FDA4AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

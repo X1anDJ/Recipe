@@ -7,26 +7,29 @@
 
 import SwiftUI
 
+/// A horizontal scroll view for filtering recipes by cuisine.
 struct CuisineFilterView: View {
-    @ObservedObject var networkManager: NetworkManager
+    /// View model managing recipe data and state.
+    @ObservedObject var viewModel: RecipeListViewModel
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
-                ForEach(networkManager.allCuisines, id: \.self) { cuisine in
+                // Generate a button for each available cuisine.
+                ForEach(viewModel.allCuisines, id: \.self) { cuisine in
                     Button(action: {
                         withAnimation {
-                            networkManager.selectedCuisine = cuisine
+                            viewModel.selectedCuisine = cuisine
                         }
                     }) {
                         Text(cuisine)
                             .font(.subheadline)
-                            .foregroundColor(networkManager.selectedCuisine == cuisine ? .primary : .secondary)
+                            .foregroundColor(viewModel.selectedCuisine == cuisine ? .primary : .secondary)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 16)
                     }
                     .background(
-                        networkManager.selectedCuisine == cuisine
+                        viewModel.selectedCuisine == cuisine
                             ? .regularMaterial
                             : .thinMaterial,
                         in: RoundedRectangle(cornerRadius: 20)

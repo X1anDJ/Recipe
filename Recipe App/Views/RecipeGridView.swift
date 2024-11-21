@@ -7,8 +7,11 @@
 
 import SwiftUI
 
+/// Displays a grid of recipes with a header for sorting options.
 struct RecipeGridView: View {
-    @ObservedObject var networkManager: NetworkManager
+    /// View model managing recipe data and state.
+    @ObservedObject var viewModel: RecipeListViewModel
+    /// Binding to control the presentation of the sorting dialog.
     @Binding var isSortingDialogPresented: Bool
 
     var body: some View {
@@ -16,7 +19,7 @@ struct RecipeGridView: View {
             VStack(spacing: 0) {
                 // Header with Title and Sorting Button
                 HStack {
-                    Text("\(networkManager.selectedCuisine) Recipes")
+                    Text("\(viewModel.selectedCuisine) Recipes")
                         .font(.title3)
                         .fontWeight(.bold)
                         .padding(.top, 16)
@@ -29,7 +32,7 @@ struct RecipeGridView: View {
                         isSortingDialogPresented = true
                     }) {
                         HStack(spacing: 0) {
-                            Text(networkManager.sortOption.rawValue)
+                            Text(viewModel.sortOption.rawValue)
                                 .padding(.trailing, 8)
                             Image(systemName: "chevron.down")
                         }
@@ -41,10 +44,10 @@ struct RecipeGridView: View {
                 }
                 .padding(.horizontal)
 
-                // Separator
+                // Separator Line
                 Divider()
 
-                // Recipe Grid
+                // Recipe Grid Layout
                 LazyVGrid(
                     columns: [
                         GridItem(.flexible(), spacing: 16),
@@ -52,8 +55,9 @@ struct RecipeGridView: View {
                     ],
                     spacing: 16
                 ) {
-                    ForEach(networkManager.filteredRecipes) { recipe in
-                        RecipeCard(recipe: recipe)
+                    // Iterate over filtered recipes and display each as a card.
+                    ForEach(viewModel.filteredRecipes) { recipe in
+                        RecipeCardView(recipe: recipe)
                             .id(recipe.id)
                     }
                 }

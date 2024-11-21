@@ -8,9 +8,13 @@
 import SwiftUI
 import Kingfisher
 
+/// The main view displaying the list of recipes with search and sorting functionalities.
 struct ContentView: View {
-    @StateObject private var networkManager = NetworkManager()
+    /// View model managing recipe data and state.
+    @StateObject private var viewModel = RecipeListViewModel()
+    /// Proxy for controlling the scroll view, used for scrolling to top.
     @State private var scrollProxy: ScrollViewProxy? = nil
+    /// Controls the presentation of the sorting dialog.
     @State private var isSortingDialogPresented: Bool = false
     
     var body: some View {
@@ -20,36 +24,36 @@ struct ContentView: View {
                     ScrollView {
                         VStack(spacing: 16) {
                             // Handle Loading State
-                            if networkManager.isLoading {
+                            if viewModel.isLoading {
                                 LoadingView()
                             }
                             // Handle Error State
-                            else if let error = networkManager.errorMessage {
+                            else if let error = viewModel.errorMessage {
                                 ErrorView(message: error)
                             }
                             // Handle Content
                             else {
                                 RecipeContentView(
-                                    networkManager: networkManager,
+                                    viewModel: viewModel,
                                     isSortingDialogPresented: $isSortingDialogPresented
                                 )
                             }
                         }
                     }
                     .refreshable {
-                        networkManager.fetchRecipes()
+                        viewModel.fetchRecipes()
                     }
                     .onAppear {
                         self.scrollProxy = proxy
-                        networkManager.fetchRecipes()
+                        viewModel.fetchRecipes()
                         print("Fetch on appearing")
                     }
                 }
 
-                if !networkManager.filteredRecipes.isEmpty {
+                if !viewModel.filteredRecipes.isEmpty {
                     Button(action: {
                         withAnimation {
-                            if let firstRecipe = networkManager.filteredRecipes.first {
+                            if let firstRecipe = viewModel.filteredRecipes.first {
                                 scrollProxy?.scrollTo(firstRecipe.id, anchor: .top)
                             }
                         }
@@ -62,35 +66,35 @@ struct ContentView: View {
                     }
                     .padding()
                 }
-
             }
+            // Sets a dynamic background image based on the first recipe's photo.
             .background(
                 BackgroundView(
-                    imageURL: networkManager.filteredRecipes.first?.photoURLLarge ?? networkManager.filteredRecipes.first?.photoURLSmall
+                    imageURL: viewModel.filteredRecipes.first?.photoURLLarge ?? viewModel.filteredRecipes.first?.photoURLSmall
                 )
             )
             .navigationTitle("Recipes")
             .navigationBarTitleDisplayMode(.large)
+            // Enables pull-to-refresh functionality to reload recipes.
             .searchable(
-                text: $networkManager.searchText,
+                text: $viewModel.searchText,
                 placement: .navigationBarDrawer(displayMode: .automatic),
                 prompt: "Search recipes..."
             )
-            // Confirmation Dialog for Sorting Options
+            // Presents a confirmation dialog for sorting options.
             .confirmationDialog("Sort Recipes", isPresented: $isSortingDialogPresented, titleVisibility: .hidden) {
                 Button("A~Z") {
-                    networkManager.sortOption = .aToZ
+                    viewModel.sortOption = .aToZ
                 }
                 Button("Z~A") {
-                    networkManager.sortOption = .zToA
+                    viewModel.sortOption = .zToA
                 }
                 Button("Random Order") {
-                    networkManager.sortOption = .random
+                    viewModel.sortOption = .random
                 }
             }
         }
     }
-
 }
 
 #Preview {

@@ -7,23 +7,27 @@
 
 import SwiftUI
 
+/// Displays the main content including filters and recipe grid.
 struct RecipeContentView: View {
-    @ObservedObject var networkManager: NetworkManager
+    /// View model managing recipe data and state.
+    @ObservedObject var viewModel: RecipeListViewModel
+    /// Binding to control the presentation of the sorting dialog.
     @Binding var isSortingDialogPresented: Bool
 
     var body: some View {
         VStack(spacing: 16) {
             // Cuisine Filter Buttons
-            CuisineFilterView(networkManager: networkManager)
+            CuisineFilterView(viewModel: viewModel)
                 .padding(.top, 0)
                 .padding(.horizontal)
 
             // Check for No Results Found
-            if networkManager.filteredRecipes.isEmpty && !networkManager.searchText.isEmpty {
+            if viewModel.filteredRecipes.isEmpty && !viewModel.searchText.isEmpty {
                 ErrorView(message: "No results found.")
             } else {
+                // Display the grid of recipes.
                 RecipeGridView(
-                    networkManager: networkManager,
+                    viewModel: viewModel,
                     isSortingDialogPresented: $isSortingDialogPresented
                 )
             }

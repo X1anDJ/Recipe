@@ -4,50 +4,36 @@
 //
 //  Created by Dajun Xian on 2024/11/20.
 //
-// Networking/NetworkManager.swift
 
 import Foundation
 import Combine
 
-enum SortingOption: String, CaseIterable, Identifiable {
-    case aToZ = "A~Z"
-    case zToA = "Z~A"
-    case random = "Random Order"
+/// Manages network requests for fetching recipes.
+class NetworkManager {
+    /// The endpoint URL string for fetching recipes.
+    private let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
     
-    var id: String { self.rawValue }
-}
+    /// The URLSession instance used for network requests. Defaults to `URLSession.shared`.
+    private let session: URLSession
+    
+    /// Initializes the NetworkManager with a specific URLSession.
+    /// - Parameter session: The URLSession to use. Defaults to `URLSession.shared`.
+    init(session: URLSession = .shared) {
+        self.session = session
+    }
 
-class NetworkManager: ObservableObject {
-    @Published var recipes: [Recipe] = []
-    @Published var searchText: String = ""
-    @Published var selectedCuisine: String = "All"
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String? = nil
-    @Published var sortOption: SortingOption = .aToZ  // Added sorting option
-    
-    private var cancellables = Set<AnyCancellable>()
-//    private let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
-    
-//    //    Malformed Data:
-//    private let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json"
-
-    //    Empty Data:
-    private let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json"
-    
-    
-    func fetchRecipes() {
+    /// Fetches recipes from the API.
+    ///
+    /// - Returns: A publisher that emits an array of `Recipe` or an `Error`.
+    func fetchRecipes() -> AnyPublisher<[Recipe], Error> {
         guard let url = URL(string: urlString) else {
-            DispatchQueue.main.async {
-                self.errorMessage = "Invalid URL."
-                self.recipes = []
-            }
-            return
+            // Return a failure publisher if the URL is invalid.
+            return Fail(error: URLError(.badURL))
+                .eraseToAnyPublisher()
         }
 
-        isLoading = true
-        errorMessage = nil
-
-        URLSession.shared.dataTaskPublisher(for: url)
+        return session.dataTaskPublisher(for: url)
+            // Validate the HTTP response.
             .tryMap { (data, response) -> Data in
                 guard let httpResponse = response as? HTTPURLResponse,
                       200..<300 ~= httpResponse.statusCode else {
@@ -55,61 +41,10 @@ class NetworkManager: ObservableObject {
                 }
                 return data
             }
+            // Decode the JSON data into RecipeResponse.
             .decode(type: RecipeResponse.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                self.isLoading = false
-                switch completion {
-                case .finished:
-                    print("Successfully fetched recipes.")
-                case .failure(let error):
-                    print("Error fetching recipes: \(error)")
-                    self.errorMessage = "Recipes data are malformed."
-                    self.recipes = [] // Disregard the entire list
-                }
-            } receiveValue: { [weak self] response in
-                guard let self = self else { return }
-                self.recipes = response.recipes
-                if self.recipes.isEmpty {
-                    self.errorMessage = "No recipes available."
-                }
-            }
-            .store(in: &cancellables)
-    }
-
-    var filteredRecipes: [Recipe] {
-        var filtered = recipes
-
-        // Apply search text filter
-        if !searchText.isEmpty {
-            filtered = filtered.filter {
-                $0.name.lowercased().contains(searchText.lowercased()) ||
-                $0.cuisine.lowercased().contains(searchText.lowercased())
-            }
-        }
-
-        // Apply cuisine filter
-        if selectedCuisine != "All" {
-            filtered = filtered.filter { $0.cuisine == selectedCuisine }
-        }
-        
-        // Apply sorting
-        switch sortOption {
-        case .aToZ:
-            filtered.sort { $0.name.lowercased() < $1.name.lowercased() }
-        case .zToA:
-            filtered.sort { $0.name.lowercased() > $1.name.lowercased() }
-        case .random:
-            filtered.shuffle()
-        }
-        
-        return filtered
-    }
-
-    // Get all unique cuisine types
-    var allCuisines: [String] {
-        let cuisines = recipes.map { $0.cuisine }
-        let uniqueCuisines = Set(cuisines)
-        return ["All"] + uniqueCuisines.sorted()
+            // Extract the recipes array from the response.
+            .map { $0.recipes }
+            .eraseToAnyPublisher()
     }
 }
