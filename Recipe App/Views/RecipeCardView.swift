@@ -12,6 +12,8 @@ struct RecipeCardView: View {
     let recipe: Recipe
     let infoHeight: CGFloat = 64
     let cardHorizontalPadding: CGFloat = 24
+    @State private var showVideo = false
+    
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading, spacing: 0) {
@@ -53,6 +55,21 @@ struct RecipeCardView: View {
                         .frame(maxWidth: .infinity, alignment: .topLeading)
                 }
                 .frame(height: infoHeight) // Fixed height for recipe information
+            }
+            .onTapGesture {
+                if recipe.youtubeURL != nil {
+                    showVideo = true
+                }
+            }
+            .sheet(isPresented: $showVideo) {
+                if let youtubeURL = recipe.youtubeURL {
+                    NavigationView {
+                        VideoPlayerView(url: youtubeURL)
+                            .navigationBarItems(trailing: Button("Close") {
+                                showVideo = false
+                            })
+                    }
+                }
             }
         }
         .frame(height: (UIScreen.main.bounds.width / 2 - 48) + infoHeight + cardHorizontalPadding) // Card width (half screen) + info height + padding
