@@ -1,34 +1,39 @@
 //
-//  EmptyStateView.swift
+//  ErrorView.swift
 //  Recipe App
 //
 //  Created by Dajun Xian on 2024/11/20.
 //
+
 import SwiftUI
 
-struct EmptyStateView: View {
-    var message: String
+struct ErrorView: View {
+    let message: String
 
     var body: some View {
+        Spacer()
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 32, height: 32)
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
 
             Text(message)
                 .font(.title2)
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
+            Text("Pull down to refresh.")
+                .font(.title2)
+                .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
         }
+        //backgroundcolor
+        
         .padding()
-    }
-}
-
-struct EmptyStateView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyStateView(message: "No recipes available.")
+        Spacer()
     }
 }

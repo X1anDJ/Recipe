@@ -26,13 +26,13 @@ class NetworkManager: ObservableObject {
     @Published var sortOption: SortingOption = .aToZ  // Added sorting option
     
     private var cancellables = Set<AnyCancellable>()
-    private let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
+//    private let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
     
 //    //    Malformed Data:
 //    private let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json"
-//
-//    //    Empty Data:
-//    private let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json"
+
+    //    Empty Data:
+    private let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json"
     
     
     func fetchRecipes() {
